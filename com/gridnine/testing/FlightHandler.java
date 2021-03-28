@@ -8,7 +8,16 @@ import java.util.stream.Collectors;
 public class FlightHandler implements FlightFilter{
 
     public List<Flight> flightBeforeCurrentDate(List<Flight> list) {
-        List<Flight> fList = list.stream().filter((a) -> a.getSegments().get(0).getDepartureDate().isBefore(LocalDateTime.now())).collect(Collectors.toList());
+        List<Flight> fList = list.stream().filter((a) -> {
+            for(int i = 0; i < a.getSegments().size(); i++)
+            {
+                if(a.getSegments().get(i).getDepartureDate().isBefore(LocalDateTime.now()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
         return fList;
     }
 
